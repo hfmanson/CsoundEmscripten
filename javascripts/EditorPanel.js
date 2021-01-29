@@ -31,13 +31,14 @@ define('EditorPanel', ["ORCSCOEditor", "CSDEditor"], function(ORCSCOEditor, CSDE
 		csdEditor.replaceParentDiv();
 		var csdEditorButton = document.getElementById("CSDEditorButton");
 		var orcScoEditorButton = document.getElementById("ORCSCOEditorButton");
-
+		var csdSelected = true;
 
 		csdEditorButton.onclick = function() {
 
 			csdEditorButton.className = "btn btn-primary btn-sm active"
 			orcScoEditorButton.className = "btn btn-primary btn-sm"
 			csdEditor.replaceParentDiv();
+			csdSelected = true;
 		};
 
 		orcScoEditorButton.onclick = function() {
@@ -45,14 +46,24 @@ define('EditorPanel', ["ORCSCOEditor", "CSDEditor"], function(ORCSCOEditor, CSDE
 			csdEditorButton.className = "btn btn-primary btn-sm"
 			orcScoEditorButton.className = "btn btn-primary btn-sm active"
 			orcScoEditor.replaceParentDiv();
+			csdSelected = false;
 		};
 
 		var compileButton = document.getElementById("CompileButton");
 		compileButton.onclick = function() {
+			if (csdSelected) {
+				var editorContents = csdEditor.editor.getValue();
+				fileManager.writeStringToFile(csdEditor.currentFilePath, editorContents);
+				csound.compileCSD(csdEditor.currentFilePath);
+			} else {
+				var orcContents = orcScoEditor.orcEditor.getValue();
+				//fileManager.writeStringToFile(orcScoEditor.currentFilePath, orcContents);
+				var orcFile;
+				var scoFile;
+debugger;
+				//csound.compileOrcSco(orcFile, scoFile);
+			}
 
-			var editorContents = csdEditor.editor.getValue();
-			fileManager.writeStringToFile(csdEditor.currentFilePath, editorContents);
-			csound.compileCSD(csdEditor.currentFilePath);
 		};
 
 		var renderButton = document.getElementById("RenderButton");

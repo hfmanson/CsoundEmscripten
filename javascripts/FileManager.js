@@ -92,7 +92,7 @@ var FileManager = function(allowedFileExtensions, errorPrintCallback) {
 	this.readFileAsString = function(filePath) {
 
 		var data = FS.readFile(filePath);
-		var string = String.fromCharCode.apply(null, data);
+		var string = new TextDecoder("utf-8").decode(data);
 
 		return string;
 	};

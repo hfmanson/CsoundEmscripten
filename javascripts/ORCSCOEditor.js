@@ -58,7 +58,7 @@ define('ORCSCOEditor', ["ace/ace"], function(ace) {
 
 					if (orcDiv === true) {
 
-						csound.evaluateCode(editor.getValue());
+						csound.compileOrc(editor.getValue());
 					}
 					else {
 

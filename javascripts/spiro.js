@@ -41,20 +41,19 @@ var Module = {};
 function main() {
 	Module['noExitRuntime'] = true;
 	Module['_main'] = function() {
-		require(["FileList", "InputPanel", "ConsolePanel", "FileManager", "FilePanel", "HelpPanel", "EditorPanel"], function () {
+		require(["FileList", "InputSpiroPanel", "ConsolePanel", "FileManager", "FilePanel", "HelpPanel", "EditorPanel"], function () {
 			var ConsolePanel = require('ConsolePanel');
-			var HelpPanel = require('HelpPanel');
 			var EditorPanel = require('EditorPanel');
 			var FilePanel = require('FilePanel');
-			var InputPanel = require('InputPanel');
+			var InputSpiroPanel = require('InputSpiroPanel');
 			var consolePanel = new ConsolePanel();
-			consolePanel.print("Welcome to Csound Emscripten!");
+			consolePanel.print("Welcome to Csound Emscripten Spirograph!");
 
 //			Module['print'] = Module['printErr'] = consolePanel.print 
 			Module['print'] = Module['printErr'] = function (txt) { console.log(txt); };
 			const csound = new CsoundObj();
 
-			var inputPanel = new InputPanel(csound);
+			var inputPanel = new InputSpiroPanel(csound);
 			var allowedFileExtensions = ["csd", "wav", "orc"];
 			const fileManager = new FileManager(allowedFileExtensions, Module["print"]);
 
@@ -65,11 +64,7 @@ function main() {
 				filePanel.populateList();
 			};
 
-			fileManager.fileUploadFromServer("controlInputTest.csd", fileUploadedCallback);
-			fileManager.fileUploadFromServer("tobias.csd", fileUploadedCallback);
-			fileManager.fileUploadFromServer("audioInputTest.csd", fileUploadedCallback);
-			fileManager.fileUploadFromServer("Boulanger-Trapped_in_Convert.csd", fileUploadedCallback);
-			fileManager.fileUploadFromServer("midiInputTest.csd", fileUploadedCallback);
+			fileManager.fileUploadFromServer("spiro.csd", fileUploadedCallback);
 		
 			fileUploadedCallback = function() {
 
@@ -79,7 +74,6 @@ function main() {
 
 
 
-			var helpPanel = new HelpPanel(editorPanel.orcEditorDiv, editorPanel.scoEditorDiv, filePanel.fileNameDiv);
 		});
 	};
 	require(["jquery", "bootstrap", "libcsound", "CsoundObj"], function () {
